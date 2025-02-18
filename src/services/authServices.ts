@@ -5,7 +5,7 @@ export const loginServices = async (data: {
   password: string;
 }) => {
   const response = await axiosInstance.post("/api/login", data);
-  return response.data;
+  return response;
 };
 
 export const registerServices = async (data: {
@@ -13,5 +13,5 @@ export const registerServices = async (data: {
   password: string;
 }) => {
   const response = await axiosInstance.post("/api/register", data);
-  return response.data;
+  return response;
 };

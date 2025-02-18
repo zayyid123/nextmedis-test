@@ -15,7 +15,7 @@ import {
 } from "@/components/ui/sidebar";
 import { ChevronRight, ChevronsUpDown, LogOut, User } from "lucide-react";
 import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import {
   Collapsible,
   CollapsibleContent,
@@ -32,10 +32,30 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "./ui/dropdown-menu";
-import { Avatar, AvatarFallback } from "./ui/avatar";
+import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar";
+import { useEffect, useState } from "react";
+import { UserTypes } from "@/types/UserTypes";
 
 export function AppSidebar() {
   const pathname = usePathname();
+  const router = useRouter();
+  const [userData, setuserData] = useState<UserTypes>({
+    avatar: "",
+    email: "",
+    first_name: "",
+    id: 0,
+    last_name: "",
+  });
+
+  useEffect(() => {
+    const getUserSignIn = async () => {
+      const userDataLocal = localStorage.getItem("DATA_USER");
+      if (userDataLocal) {
+        setuserData(JSON.parse(userDataLocal));
+      }
+    };
+    getUserSignIn();
+  }, []);
 
   return (
     <Sidebar collapsible="icon">
@@ -49,7 +69,9 @@ export function AppSidebar() {
             />
           </div>
           <div className="grid flex-1 text-left text-sm leading-tight">
-            <span className="truncate font-semibold">Nextmedis</span>
+            <span className="truncate font-semibold">
+              {userData.first_name + " " + userData.last_name}
+            </span>
             <span className="truncate text-xs">User</span>
           </div>
         </div>
@@ -124,13 +146,21 @@ export function AppSidebar() {
                   className="data-[state=open]:bg-sidebar-accent data-[state=open]:text-sidebar-accent-foreground"
                 >
                   <Avatar className="h-8 w-8 rounded-lg ">
+                    <AvatarImage
+                      src={`https://ui-avatars.com/api/?name=${
+                        userData.first_name + " " + userData.last_name
+                      }`}
+                      alt={userData.first_name + " " + userData.last_name}
+                    />
                     <AvatarFallback className="rounded-lg bg">
-                      {"zay"}
+                      {userData.first_name + " " + userData.last_name}
                     </AvatarFallback>
                   </Avatar>
                   <div className="grid flex-1 text-left text-sm leading-tight">
-                    <span className="truncate font-semibold">{"zay"}</span>
-                    <span className="truncate text-xs">{"zay@mail.com"}</span>
+                    <span className="truncate font-semibold">
+                      {userData.first_name + " " + userData.last_name}
+                    </span>
+                    <span className="truncate text-xs">{userData.email}</span>
                   </div>
                   <ChevronsUpDown className="ml-auto size-4" />
                 </SidebarMenuButton>
@@ -144,28 +174,46 @@ export function AppSidebar() {
                 <DropdownMenuLabel className="p-0 font-normal">
                   <div className="flex items-center gap-2 px-1 py-1.5 text-left text-sm">
                     <Avatar className="h-8 w-8 rounded-lg">
+                      <AvatarImage
+                        src={`https://ui-avatars.com/api/?name=${
+                          userData.first_name + " " + userData.last_name
+                        }`}
+                        alt={userData.first_name + " " + userData.last_name}
+                      />
                       <AvatarFallback className="rounded-lg">
-                        {"zay"}
+                        {userData.first_name + " " + userData.last_name}
                       </AvatarFallback>
                     </Avatar>
                     <div className="grid flex-1 text-left text-sm leading-tight">
-                      <span className="truncate font-semibold">{"zay"}</span>
+                      <span className="truncate font-semibold">
+                        {userData.first_name + " " + userData.last_name}
+                      </span>
                       <span className="truncate text-xs">
                         {" "}
-                        {"zay@mail.com"}
+                        {userData.email}
                       </span>
                     </div>
                   </div>
                 </DropdownMenuLabel>
                 <DropdownMenuSeparator />
                 <DropdownMenuGroup>
-                  <DropdownMenuItem>
+                  <DropdownMenuItem
+                    onClick={() => {
+                      router.push("/dashboard/profile");
+                    }}
+                  >
                     <User />
                     Profile
                   </DropdownMenuItem>
                 </DropdownMenuGroup>
                 <DropdownMenuSeparator />
-                <DropdownMenuItem onClick={() => {}}>
+                <DropdownMenuItem
+                  onClick={() => {
+                    document.cookie =
+                      "token=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+                    router.push("/auth/login");
+                  }}
+                >
                   <LogOut />
                   Log out
                 </DropdownMenuItem>

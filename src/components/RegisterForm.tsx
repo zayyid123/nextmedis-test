@@ -12,6 +12,7 @@ import { toast } from "sonner";
 import { useRouter } from "next/navigation";
 import { registerServices } from "@/services/authServices";
 import { handleError } from "@/utils/errorHandler";
+import { getDetailUsersServices } from "@/services/userServices";
 
 const schema = z.object({
   email: z.string().email({ message: "Your email is invalid." }),
@@ -49,7 +50,17 @@ const RegisterForm = () => {
     startTransition(async () => {
       try {
         const response = await registerServices(data);
-        document.cookie = `token=${response.token}; path=/; max-age=3600;`;
+        document.cookie = `token=${response.data.token}; path=/; max-age=3600;`;
+
+        // get data user
+        const id = response.data.token.slice(-1);
+        const responseUser = await getDetailUsersServices(id);
+
+        // save locale storage
+        localStorage.setItem(
+          "DATA_USER",
+          JSON.stringify(responseUser.data.data)
+        );
 
         toast.success("Successfully logged in");
         router.push("/dashboard");
