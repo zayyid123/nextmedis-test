@@ -211,6 +211,7 @@ export function AppSidebar() {
                   onClick={() => {
                     document.cookie =
                       "token=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+                    localStorage.removeItem("DATA_USER");
                     router.push("/auth/login");
                   }}
                 >

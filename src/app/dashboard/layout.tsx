@@ -1,15 +1,20 @@
 import { AppSidebar } from "@/components/app-sidebar";
-import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar";
-import React from "react";
+import Header from "@/components/header";
+import { SidebarInset, SidebarProvider } from "@/components/ui/sidebar";
+import { cookies } from "next/headers";
 
-const DashboardLayout = ({ children }: { children: React.ReactNode }) => {
+const DashboardLayout = async ({ children }: { children: React.ReactNode }) => {
+  const cookieStore = await cookies();
+  const defaultOpen = cookieStore.get("sidebar:state")?.value === "true";
   return (
-    <SidebarProvider>
+    <SidebarProvider defaultOpen={defaultOpen}>
       <AppSidebar />
-      <div className="flex flex-col w-full h-full">
-        <SidebarTrigger />
+      <SidebarInset>
+        <Header />
+        {/* page main content */}
         {children}
-      </div>
+        {/* page main content ends */}
+      </SidebarInset>
     </SidebarProvider>
   );
 };
