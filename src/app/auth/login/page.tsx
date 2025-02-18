@@ -16,7 +16,7 @@ const LoginPage = () => {
           </div>
           <div className="absolute left-0 2xl:bottom-[-160px] bottom-[-130px] h-full w-full z-[-1]">
             <Image
-              src="/images/auth/bg.png"
+              src="/images/auth/bg_login.png"
               alt=""
               width={900}
               height={900}
@@ -40,7 +40,7 @@ const LoginPage = () => {
               {/* form */}
               <LoginForm />
 
-              <div className="md:max-w-[345px] mx-auto font-normal text-default-500 mt-12 uppercase text-sm">
+              <div className="md:max-w-[345px] mx-auto font-normal text-default-500 mt-12 text-sm">
                 Don’t have an account?{" "}
                 <Link
                   href="/auth/register"
