@@ -1,7 +1,7 @@
 import { axiosInstance } from "@/config/axiosConfig";
 
-export const getAllUserServices = async () => {
-  const response = await axiosInstance.get("/api/users");
+export const getAllUserServices = async (page: string = "1") => {
+  const response = await axiosInstance.get(`/api/users?page=${page}`);
   return response;
 };
 
