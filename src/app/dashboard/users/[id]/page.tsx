@@ -52,7 +52,7 @@ const PageEditUser = () => {
   async function onSubmit(data: z.infer<typeof formSchema>) {
     setIsLoading(true);
     try {
-      await editUsersServices(id, data);
+      await editUsersServices(id as string, data);
 
       toast.success("Data successfully edited", { duration: 1000 });
       router.back();
