@@ -8,6 +8,7 @@ import {
   DropdownMenuLabel,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import { deleteUsersServices } from "@/services/userServices";
 import { UserTypes } from "@/types/UserTypes";
 import { handleError } from "@/utils/errorHandler";
 import { Edit, MoreHorizontal, Trash } from "lucide-react";
@@ -28,12 +29,12 @@ export const CellAction: React.FC<CellActionProps> = ({ data }) => {
     setLoading(true);
     try {
       if (data.id !== undefined) {
-        // await deleteDataAdminById(data.id.toString());
+        await deleteUsersServices(data.id.toString());
       }
 
       setLoading(false);
       setOpen(false);
-      toast.success("Data berhasil dihapus.", { duration: 1000 });
+      toast.success("Data has been deleted!", { duration: 1000 });
       window.location.reload();
     } catch (error) {
       setLoading(false);

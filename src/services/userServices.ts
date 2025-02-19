@@ -30,3 +30,10 @@ export const editUsersServices = async (
   const response = await axiosInstance.put(`/api/users/${id}`, data);
   return response;
 };
+
+export const deleteUsersServices = async (
+  id: string,
+) => {
+  const response = await axiosInstance.delete(`/api/users/${id}`);
+  return response;
+};
