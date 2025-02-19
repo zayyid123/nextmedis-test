@@ -86,8 +86,6 @@ export function UserDataTable<TData, TValue>({
     manualFiltering: true,
   });
 
-  console.log(table.getHeaderGroups()[0].headers[0].column.getCanHide());
-
   return (
     <div className="space-y-4">
       <ScrollArea className="rounded-md border mb-8 overflow-hidden ">
