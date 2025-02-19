@@ -25,7 +25,8 @@ import {
   ChevronRightIcon,
 } from "lucide-react";
 import { Separator } from "@/components/ui/separator";
-import { parseAsInteger, useQueryState } from 'nuqs';
+import { parseAsInteger, useQueryState } from "nuqs";
+import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area";
 
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
@@ -40,19 +41,19 @@ export function UserDataTable<TData, TValue>({
   totalItems,
 }: DataTableProps<TData, TValue>) {
   const [currentPage, setCurrentPage] = useQueryState(
-    'page',
+    "page",
     parseAsInteger.withOptions({ shallow: false }).withDefault(1)
   );
   const [pageSize, setPageSize] = useQueryState(
-    'limit',
+    "limit",
     parseAsInteger
-      .withOptions({ shallow: false, history: 'push' })
+      .withOptions({ shallow: false, history: "push" })
       .withDefault(6)
   );
 
   const paginationState = {
     pageIndex: currentPage - 1, // zero-based index for React Table
-    pageSize: pageSize
+    pageSize: pageSize,
   };
 
   const pageCount = Math.ceil(totalItems / pageSize);
@@ -63,7 +64,7 @@ export function UserDataTable<TData, TValue>({
       | ((old: PaginationState) => PaginationState)
   ) => {
     const pagination =
-      typeof updaterOrValue === 'function'
+      typeof updaterOrValue === "function"
         ? updaterOrValue(paginationState)
         : updaterOrValue;
 
@@ -76,38 +77,43 @@ export function UserDataTable<TData, TValue>({
     columns,
     pageCount: pageCount,
     state: {
-      pagination: paginationState
+      pagination: paginationState,
     },
     onPaginationChange: handlePaginationChange,
     getCoreRowModel: getCoreRowModel(),
     getPaginationRowModel: getPaginationRowModel(),
     manualPagination: true,
-    manualFiltering: true
+    manualFiltering: true,
   });
 
+  console.log(table.getHeaderGroups()[0].headers[0].column.getCanHide());
+
   return (
-    <div>
-      <div className="rounded-md border mb-8 overflow-hidden">
-        <Table>
-          <TableHeader>
+    <div className="space-y-4">
+      <ScrollArea className="rounded-md border mb-8 overflow-hidden ">
+        <Table className={`relative`}>
+          <TableHeader className="w-full">
             {table.getHeaderGroups().map((headerGroup) => (
               <TableRow key={headerGroup.id}>
-                {headerGroup.headers.map((header) => {
-                  return (
-                    <TableHead key={header.id}>
-                      {header.isPlaceholder
-                        ? null
-                        : flexRender(
-                            header.column.columnDef.header,
-                            header.getContext()
-                          )}
-                    </TableHead>
-                  );
-                })}
+                {headerGroup.headers.map((header) => (
+                  <TableHead
+                    key={header.id}
+                    className={
+                      header.column.getCanHide() ? "hidden lg:table-cell" : ""
+                    }
+                  >
+                    {header.isPlaceholder
+                      ? null
+                      : flexRender(
+                          header.column.columnDef.header,
+                          header.getContext()
+                        )}
+                  </TableHead>
+                ))}
               </TableRow>
             ))}
           </TableHeader>
-          <TableBody>
+          <TableBody className="w-full">
             {table.getRowModel().rows?.length ? (
               table.getRowModel().rows.map((row) => (
                 <TableRow
@@ -115,7 +121,12 @@ export function UserDataTable<TData, TValue>({
                   data-state={row.getIsSelected() && "selected"}
                 >
                   {row.getVisibleCells().map((cell) => (
-                    <TableCell key={cell.id}>
+                    <TableCell
+                      key={cell.id}
+                      className={
+                        cell.column.getCanHide() ? "hidden lg:table-cell" : ""
+                      }
+                    >
                       {flexRender(
                         cell.column.columnDef.cell,
                         cell.getContext()
@@ -136,7 +147,8 @@ export function UserDataTable<TData, TValue>({
             )}
           </TableBody>
         </Table>
-      </div>
+        <ScrollBar orientation="horizontal" />
+      </ScrollArea>
       <Separator />
       <div className="flex flex-col items-center justify-end gap-2 space-x-2 py-4 sm:flex-row">
         <div className="flex w-full items-center justify-between">

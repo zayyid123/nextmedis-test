@@ -9,10 +9,12 @@ export const UserColumns: ColumnDef<UserTypes>[] = [
   {
     accessorKey: "id",
     header: "ID",
+    enableHiding: false,
   },
   {
     accessorKey: "avatar",
     header: "Avatar",
+    enableHiding: true,
     cell: (row) => (
       <Image
         src={row.row.original.avatar}
@@ -26,6 +28,7 @@ export const UserColumns: ColumnDef<UserTypes>[] = [
   {
     accessorKey: "first_name",
     header: "First Name",
+    enableHiding: false,
   },
   {
     accessorKey: "last_name",
@@ -35,9 +38,19 @@ export const UserColumns: ColumnDef<UserTypes>[] = [
   {
     accessorKey: "email",
     header: "Email",
+    cell: (row) => (
+      <span
+        title={row.row.original.email}
+        className="inline-block lg:max-w-none max-w-[100px] overflow-hidden text-ellipsis whitespace-nowrap"
+      >
+        {row.row.original.email}
+      </span>
+    ),
+    enableHiding: false,
   },
   {
-    id: 'actions',
-    cell: ({ row }) => <CellAction data={row.original} />
-  }
+    id: "actions",
+    enableHiding: false,
+    cell: ({ row }) => <CellAction data={row.original} />,
+  },
 ];
