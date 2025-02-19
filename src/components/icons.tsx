@@ -31,6 +31,7 @@ import {
   UserPen,
   UserX2Icon,
   X,
+  Users
 } from "lucide-react";
 
 export type Icon = LucideIcon;
@@ -64,6 +65,7 @@ export const Icons = {
   sun: SunMedium,
   moon: Moon,
   laptop: Laptop,
+  users: Users,
   gitHub: ({ ...props }: LucideProps) => (
     <svg
       aria-hidden="true"
