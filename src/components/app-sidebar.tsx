@@ -12,9 +12,9 @@ import {
   SidebarMenuSub,
   SidebarMenuSubButton,
   SidebarMenuSubItem,
+  useSidebar,
 } from "@/components/ui/sidebar";
 import { ChevronRight, ChevronsUpDown, LogOut, User } from "lucide-react";
-import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import {
   Collapsible,
@@ -35,10 +35,13 @@ import {
 import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar";
 import { useEffect, useState } from "react";
 import { UserTypes } from "@/types/UserTypes";
+import { useIsMobile } from "@/hooks/use-mobile";
 
 export function AppSidebar() {
   const pathname = usePathname();
   const router = useRouter();
+  const { toggleSidebar } = useSidebar();
+  const isMobile = useIsMobile();
   const [userData, setuserData] = useState<UserTypes>({
     avatar: "",
     email: "",
@@ -108,9 +111,17 @@ export function AppSidebar() {
                               asChild
                               isActive={pathname === subItem.url}
                             >
-                              <Link href={subItem.url}>
+                              <div
+                                className="cursor-pointer"
+                                onClick={() => {
+                                  router.push(subItem.url);
+                                  if (isMobile) {
+                                    toggleSidebar();
+                                  }
+                                }}
+                              >
                                 <span>{subItem.title}</span>
-                              </Link>
+                              </div>
                             </SidebarMenuSubButton>
                           </SidebarMenuSubItem>
                         ))}
@@ -125,10 +136,18 @@ export function AppSidebar() {
                     tooltip={item.title}
                     isActive={pathname === item.url}
                   >
-                    <Link href={item.url}>
+                    <div
+                      className="cursor-pointer"
+                      onClick={() => {
+                        router.push(item.url);
+                        if (isMobile) {
+                          toggleSidebar();
+                        }
+                      }}
+                    >
                       <Icon />
                       <span>{item.title}</span>
-                    </Link>
+                    </div>
                   </SidebarMenuButton>
                 </SidebarMenuItem>
               );
