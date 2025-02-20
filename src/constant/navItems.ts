@@ -26,4 +26,12 @@ export const navItems: NavItem[] = [
     isActive: false,
     items: [], // No child items
   },
+  {
+    title: "Resources",
+    url: "/dashboard/resources",
+    icon: "files",
+    shortcut: ["", ""],
+    isActive: false,
+    items: [], // No child items
+  },
 ];
