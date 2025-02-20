@@ -1,36 +1,55 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# NextMedis Skill Test
 
-## Getting Started
+Repository ini dibuat untuk keperluan skill test di NextMedis. Aplikasi ini menggunakan API dari [Reqres](https://reqres.in/) untuk melakukan simulasi pengelolaan data pengguna.
 
-First, run the development server:
+## Tech Stack
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+- **Next.js** - Framework React untuk pengembangan web
+- **Tailwind CSS** - Utility-first CSS framework untuk styling
+- **ShadCN** - UI components untuk desain yang modern dan efisien
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Fitur
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+- Fetch data pengguna dari API Reqres
+- Menampilkan daftar pengguna dengan desain modern
+- Detail pengguna dengan informasi lengkap
+- Responsif dan user-friendly
+- **Sign In** untuk autentikasi pengguna
+- **Sign Up** untuk registrasi pengguna baru
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## Instalasi dan Menjalankan Proyek
 
-## Learn More
+1. Clone repository ini:
+   ```bash
+   git clone https://github.com/zayyid123/nextmedis-test.git
+   cd repo-name
+   ```
 
-To learn more about Next.js, take a look at the following resources:
+2. Install dependencies:
+   ```bash
+   npm install
+   ```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+3. Jalankan proyek:
+   ```bash
+   npm run dev
+   ```
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+4. Buka di browser:
+   ```
+   http://localhost:3000
+   ```
 
-## Deploy on Vercel
+## API Endpoint yang Digunakan
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+- **GET** `/api/users?page=1` - Ambil daftar pengguna
+- **GET** `/api/users/{id}` - Ambil detail pengguna berdasarkan ID
+- **POST** `/api/register` - Registrasi pengguna baru
+- **POST** `/api/login` - Autentikasi pengguna
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## Kontributor
+- [Mochamad Muzayyid Al Hakim](https://github.com/zayyid123)
+
+## Lisensi
+Proyek ini menggunakan lisensi MIT.
+
