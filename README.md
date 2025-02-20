@@ -40,6 +40,10 @@ Repository ini dibuat untuk keperluan skill test di NextMedis. Aplikasi ini meng
    http://localhost:3000
    ```
 
+## Email Password
+- **Email** `eve.holt@reqres.in`
+- **Password** `pistol`
+
 ## API Endpoint yang Digunakan
 
 - **GET** `/api/users?page=1` - Ambil daftar pengguna
